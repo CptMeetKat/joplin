@@ -566,10 +566,15 @@ function NoteEditor(props: NoteEditorProps) {
 						level={ButtonLevel.Primary}
 						title={_('In: %s', substrWithEllipsis(formNoteFolder.title, 0, 100))}
 						onClick={() => {
+
+							// let queryBuilder = '[data-folder-id="' + formNoteFolder.id + '"]';
+							// document.querySelector(queryBuilder).scrollIntoView();
+							
 							props.dispatch({
 								type: 'FOLDER_AND_NOTE_SELECT',
 								folderId: formNoteFolder.id,
 								noteId: formNote.id,
+								focusedFolder: formNoteFolder.id,
 							});
 						}}
 					/>

@@ -67,6 +67,7 @@ interface Props {
 	plugins: PluginStates;
 	folderHeaderIsExpanded: boolean;
 	tagHeaderIsExpanded: boolean;
+	focusedFolder: string;
 }
 
 const commands = [
@@ -193,6 +194,13 @@ const SidebarComponent = (props: Props) => {
 			anchorItemRefs,
 			getFirstAnchorItemRef,
 		};
+		
+		// let queryBuilder = '[data-folder-id="' + props.selectedFolderId + '"]';
+		if(props.focusedFolder != "")
+		{
+			let queryBuilder = '[data-folder-id="' + props.focusedFolder + '"]';
+			document.querySelector(queryBuilder).scrollIntoView();
+		}
 
 		CommandService.instance().componentRegisterCommands(runtimeProps, commands);
 
@@ -203,6 +211,7 @@ const SidebarComponent = (props: Props) => {
 		getSelectedItem,
 		anchorItemRefs,
 		getFirstAnchorItemRef,
+		props.focusedFolder,
 	]);
 
 	const onFolderDragStart_ = useCallback((event: any) => {
@@ -808,6 +817,7 @@ const mapStateToProps = (state: AppState) => {
 		plugins: state.pluginService.plugins,
 		tagHeaderIsExpanded: state.settings.tagHeaderIsExpanded,
 		folderHeaderIsExpanded: state.settings.folderHeaderIsExpanded,
+		focusedFolder: state.focusedFolder,
 	};
 };
 

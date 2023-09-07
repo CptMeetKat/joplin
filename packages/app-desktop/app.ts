@@ -144,6 +144,11 @@ class Application extends BaseApplication {
 
 		if (action.type === 'FOLDER_AND_NOTE_SELECT') {
 			await Folder.expandTree(newState.folders, action.folderId);
+			// if (this.hasGui())
+			// {
+			// 	let queryBuilder = '[data-folder-id="' + action.folderId + '"]';
+			// 	document.querySelector(queryBuilder).scrollIntoView();
+			// }
 		}
 
 		if (this.hasGui() && ((action.type === 'SETTING_UPDATE_ONE' && ['themeAutoDetect', 'theme', 'preferredLightTheme', 'preferredDarkTheme'].includes(action.key)) || action.type === 'SETTING_UPDATE_ALL')) {

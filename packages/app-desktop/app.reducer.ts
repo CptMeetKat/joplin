@@ -42,6 +42,7 @@ export interface AppState extends State {
 	mainLayout: LayoutItem;
 	dialogs: AppStateDialog[];
 	isResettingLayout: boolean;
+	focusedFolder: string;
 }
 
 export function createAppDefaultState(windowContentSize: any, resourceEditWatcherDefaultState: any): AppState {
@@ -66,11 +67,13 @@ export function createAppDefaultState(windowContentSize: any, resourceEditWatche
 		dialogs: [],
 		isResettingLayout: false,
 		...resourceEditWatcherDefaultState,
+		focusedFolder: "",
 	};
 }
 
 export default function(state: AppState, action: any) {
 	let newState = state;
+	newState = { ...state , focusedFolder: ""};
 
 	try {
 		switch (action.type) {
@@ -329,7 +332,14 @@ export default function(state: AppState, action: any) {
 				isResettingLayout: action.value,
 			};
 			break;
+		case 'FOLDER_AND_NOTE_SELECT':
+			newState = {
+				...state,
+				focusedFolder: action.folderId,
+			};
+			break;
 		}
+
 
 	} catch (error) {
 		error.message = `In reducer: ${error.message} Action: ${JSON.stringify(action)}`;
